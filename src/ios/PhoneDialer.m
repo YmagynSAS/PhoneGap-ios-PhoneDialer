@@ -14,8 +14,9 @@
 @implementation PhoneDialer
 
 // 'number' param may be either an unescaped phone number or a tel: url
-- (void) dialPhone:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options {
+- (void) dialPhone:(CDVInvokedUrlCommand*)command {
     NSString* url;
+    NSMutableDictionary* options = (NSMutableDictionary*)[command argumentAtIndex:0];
     NSString* number = [options valueForKey:@"number"];
     if([number hasPrefix:@"tel:"]) {
         url = number;
@@ -31,7 +32,6 @@
         NSLog(@"openURL failed, %@, %@", [[UIDevice currentDevice] model], url);
         UIAlertView *Notpermitted=[[UIAlertView alloc] initWithTitle:@"Phone" message:@"Your device doesn't support this feature." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [Notpermitted show];
-        [Notpermitted release];
     }
 }
 
